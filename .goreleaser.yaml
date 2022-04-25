@@ -1,0 +1,27 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+    binary: "{{ .ProjectName }}"
+dockers:
+  - image_templates:
+      - "justcompile/cloudflare-image-updater:{{ .Tag }}"
+      - "justcompile/cloudflare-image-updater:v{{ .Major }}"
+      - "justcompile/cloudflare-image-updater:v{{ .Major }}.{{ .Minor }}"
+      - "justcompile/cloudflare-image-updater:latest"
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

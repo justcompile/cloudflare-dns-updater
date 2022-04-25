@@ -19,17 +19,13 @@ func main() {
 	ip, err := ipify.GetIp()
 	if err != nil {
 		fmt.Println("Couldn't get my IP address:", err)
-	} else {
-		fmt.Println("My IP address is:", ip)
 	}
 
+	log.Println("Current IP:", ip)
+
 	for _, zone := range strings.Split(os.Getenv("ZONES_TO_UPDATE"), ",") {
-		records, err := dns.RecordsForZone(strings.TrimSpace(zone))
-		if err != nil {
+		if err := dns.UpdateRecordsForZone(strings.TrimSpace(zone), ip); err != nil {
 			log.Fatal(err)
 		}
-
-		fmt.Println(zone)
-		fmt.Println(records)
 	}
 }
