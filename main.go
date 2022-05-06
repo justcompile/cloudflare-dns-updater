@@ -8,11 +8,18 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/justcompile/cloudflare-dns-updater/pkg/dns"
+	"github.com/justcompile/cloudflare-dns-updater/pkg/istio"
 	"github.com/rdegges/go-ipify"
 )
 
 func main() {
 	_ = godotenv.Load()
+
+	defer istio.TriggerProxyShutdown()
+
+	if err := istio.WaitForProxyAvailability(); err != nil {
+		log.Fatal(err)
+	}
 
 	ip, err := ipify.GetIp()
 	if err != nil {
