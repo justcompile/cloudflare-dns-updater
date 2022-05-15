@@ -11,10 +11,10 @@ builds:
     binary: "{{ .ProjectName }}"
 dockers:
   - image_templates:
-      - "justcompile/cloudflare-image-updater:{{ .Tag }}"
-      - "justcompile/cloudflare-image-updater:v{{ .Major }}"
-      - "justcompile/cloudflare-image-updater:v{{ .Major }}.{{ .Minor }}"
-      - "justcompile/cloudflare-image-updater:latest"
+      - "justcompile/cloudflare-dns-updater:{{ .Tag }}"
+      - "justcompile/cloudflare-dns-updater:v{{ .Major }}"
+      - "justcompile/cloudflare-dns-updater:v{{ .Major }}.{{ .Minor }}"
+      - "justcompile/cloudflare-dns-updater:latest"
 checksum:
   name_template: 'checksums.txt'
 snapshot:
